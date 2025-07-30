@@ -12,7 +12,6 @@ public class RegistroPage {
 
     //Localizadores
 
-   // public static By jugosBlessLink = By.xpath("//*[@id=\"shopify-section-sections--18814866882798__footer\"]/footer/div[2]/div[2]/div/small[1]/a");
     private By iconoCuenta = By.cssSelector(".header__icon--account > #Capa_1");
     private By linkCrearCuenta = By.linkText("Crear cuenta");
     private By campoNombre = By.id("RegisterForm-FirstName");
@@ -29,6 +28,10 @@ public class RegistroPage {
     private By mensajeErrorDetalle = By.xpath("//*[@id=\"create_customer\"]/ul/li/text()"); //Esta dirección de e‑mail ya ha sido asociada con una cuenta. Si la cuenta es tuya, puedes <a href="/account/login#recover">restablecer tu contraseña aquí</a>
 
     //Métodos
+
+    public void clickAElemento(By localizador)    {
+        driver.findElement(localizador).click();
+    }
     public void ingresarNombre(String nombre)   {
         driver.findElement(campoNombre).sendKeys(nombre);
     }
@@ -55,5 +58,15 @@ public class RegistroPage {
         ingresarEmail(email);
         ingresarPassword(password);
         hacerClickEnCrearCuenta();
+    }
+
+    public void iniciarRegistroYCompletarFormulario(String nombre, String apellido, String email, String password )   {
+        clickAElemento(iconoCuenta);
+        clickAElemento(linkCrearCuenta);
+        registrarUsuario(nombre, apellido, email, password);
+    }
+
+    public boolean estaVisibleLinkCerrarSesion()    {
+        return driver.findElement(linkCerrarSesion).isDisplayed();
     }
 }

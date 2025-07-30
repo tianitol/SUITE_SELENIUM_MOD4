@@ -4,25 +4,21 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
 
 public class BaseTest {
 
     protected WebDriver driver;
     protected String urlBase = "https://bless.cl/";
+    protected String navegador;
 
-    @DataProvider(name = "navegadores")
-    public Object[][] navegadores() {
-        return new Object[][]   {
-                {"chrome"},
-                {"edge"}
-        };
+    public BaseTest(String navegador)   {
+        this.navegador = navegador;
     }
 
     @BeforeMethod(alwaysRun = true)
-    @Parameters("navegador")
-    public void setUp(@Optional("chrome") String navegador) {
+    //@org.testng.annotations.Parameters("navegador")
+    public void setUp() {
         if  (navegador.equalsIgnoreCase("chrome"))    {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
