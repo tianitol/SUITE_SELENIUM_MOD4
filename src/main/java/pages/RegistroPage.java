@@ -2,6 +2,10 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RegistroPage {
     private WebDriver driver;
@@ -12,44 +16,70 @@ public class RegistroPage {
 
     //Localizadores
 
-    private By iconoCuenta = By.cssSelector(".header__icon--account > #Capa_1");
-    private By linkCrearCuenta = By.linkText("Crear cuenta");
-    private By campoNombre = By.id("RegisterForm-FirstName");
-    private By campoApellido = By.id("RegisterForm-LastName");
-    private By campoEmail = By.id("RegisterForm-email");
-    private By campoPassword = By.id("RegisterForm-password");
-    private By botonFormCrearCuenta = By.cssSelector("button:nth-child(7)");
-    private By vistaCuentaUsuario = By.xpath("//div[@class='customer account section-template--18814871109870__main-padding']/div[2]/div[2]/p");
-    private By linkCerrarSesion = By.linkText("Cerrar sesión");
-    //private By mensajeErrorForm = By.cssSelector(".form__message");
-    //private By mensajeDettaleError = By.cssSelector("ul:nth-child(4) > li");
-    private By getLinkCerrarSesion = By.xpath("//*[@id=\"shopify-section-template--18814871109870__main\"]/div/div[1]/a");
+    private By linkCrearCuenta = By.xpath("/html/body/div[2]/header/div[1]/div/ul/li[3]/a");
+    private By campoNombre = By.id("firstname");
+    private By campoApellido = By.id("lastname");
+    private By campoEmail = By.id("email_address");
+    private By campoPassword = By.id("password");
+    private By campoConfirmarPassword = By.id("password-confirmation");
+    private By botonFormCrearCuenta = By.cssSelector("#form-validate > div > div.primary > button");
+    private By vistaCuentaUsuario = By.xpath("//*[@id=\"maincontent\"]/div[2]/div[1]/div[1]/h1/span");
+    private By mensajeErrorPassword = By.id("password-confirmation-error");
+    private By mensajeErrorCorreoYaRegistrado = By.cssSelector("#maincontent > div.page.messages > div:nth-child(2) > div > div > div");
+    //private By getLinkCerrarSesion = By.xpath("//*[@id=\"shopify-section-template--18814871109870__main\"]/div/div[1]/a");
     private By mensajeErrorForm = By.xpath("//*[@id=\"create_customer\"]/h2/text()"); //Por favor, ajusta lo siguiente:
     private By mensajeErrorDetalle = By.xpath("//*[@id=\"create_customer\"]/ul/li/text()"); //Esta dirección de e‑mail ya ha sido asociada con una cuenta. Si la cuenta es tuya, puedes <a href="/account/login#recover">restablecer tu contraseña aquí</a>
 
     //Métodos
 
+    public void ingresarTextoLento(By localizador, String textto)    {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement campo = wait.until(ExpectedConditions.visibilityOfElementLocated(localizador));
+        Actions actions = new Actions(driver);
+        for (char letra : textto.toCharArray()) {
+            actions.moveToElement(campo).click().sendKeys(Character.toString(letra)).pause(java.time.Duration.ofMillis(150)).build().perform();
+        }
+    }
+
     public void clickAElemento(By localizador)    {
         driver.findElement(localizador).click();
     }
     public void ingresarNombre(String nombre)   {
-        driver.findElement(campoNombre).sendKeys(nombre);
+        ingresarTextoLento(campoNombre, nombre);
     }
 
     public void ingresarApellido(String apellido)   {
-        driver.findElement(campoApellido).sendKeys(apellido);
+        ingresarTextoLento(campoApellido, apellido);
+
     }
 
     public void ingresarEmail(String email) {
-        driver.findElement(campoEmail).sendKeys(email);
+        ingresarTextoLento(campoEmail, email);
     }
 
     public void ingresarPassword(String password)   {
-        driver.findElement(campoPassword).sendKeys(password);
+        ingresarTextoLento(campoPassword, password);
+
+    }
+
+    public void ingresarConfirmarPassword(String password)   {
+        ingresarTextoLento(campoConfirmarPassword, password);
+
     }
 
     public void hacerClickEnCrearCuenta()   {
         driver.findElement(botonFormCrearCuenta).click();
+    }
+
+
+    public boolean esperarYValidarVistaCuentaDeUsuario()    {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(vistaCuentaUsuario));
+                return driver.findElement(vistaCuentaUsuario).isDisplayed();
+        }   catch   (Exception e)   {
+                return false;
+        }
     }
 
     public void registrarUsuario(String nombre, String apellido, String email, String password) {
@@ -57,16 +87,33 @@ public class RegistroPage {
         ingresarApellido(apellido);
         ingresarEmail(email);
         ingresarPassword(password);
+        ingresarConfirmarPassword(password);
         hacerClickEnCrearCuenta();
     }
 
     public void iniciarRegistroYCompletarFormulario(String nombre, String apellido, String email, String password )   {
-        clickAElemento(iconoCuenta);
         clickAElemento(linkCrearCuenta);
         registrarUsuario(nombre, apellido, email, password);
     }
 
-    public boolean estaVisibleLinkCerrarSesion()    {
-        return driver.findElement(linkCerrarSesion).isDisplayed();
+    public boolean validarError(By locator, String mensaje)    {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        try {
+            WebElement mensajeError = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return mensajeError.getText().contains(mensaje);
+        } catch (Exception e) {
+            return false;
+        }
     }
+
+    public boolean validarErrorPasswordNoCoincide() {
+        return validarError(mensajeErrorPassword, "Please enter the same value again.");
+    }
+
+    public boolean validarErrorEmailYaRegistrado()  {
+        return validarError(mensajeErrorCorreoYaRegistrado, "There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.");
+    }
+
+
+
 }

@@ -5,11 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.*;
+import utils.ReporteManager;
 
 public class BaseTest {
 
     protected WebDriver driver;
-    protected String urlBase = "https://bless.cl/";
+    protected String urlBase = "https://magento.softwaretestingboard.com/";
     protected String navegador;
 
     public BaseTest(String navegador)   {
@@ -19,6 +20,8 @@ public class BaseTest {
     @BeforeMethod(alwaysRun = true)
     //@org.testng.annotations.Parameters("navegador")
     public void setUp() {
+        ReporteManager.iniciarReporte();
+
         if  (navegador.equalsIgnoreCase("chrome"))    {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
@@ -33,6 +36,7 @@ public class BaseTest {
 
         driver.manage().window().maximize();
         driver.get(urlBase);
+        driver.manage().deleteAllCookies();
     }
 
     @AfterMethod(alwaysRun = true)
@@ -40,6 +44,7 @@ public class BaseTest {
         if (driver != null) {
             driver.quit();
         }
+        ReporteManager.finalizarReporte();
     }
 
 }

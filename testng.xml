@@ -1,0 +1,7 @@
+<suite name="SuiteRegistro" parallel="tests" thread-count="2">
+    <test name="RegistroTestFactory">
+        <classes>
+            <class name="tests.RegistroTest"/>
+        </classes>
+    </test>
+</suite>
