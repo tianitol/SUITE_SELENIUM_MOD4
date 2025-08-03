@@ -4,7 +4,7 @@
 <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>SUIT_AUTOMATIZACION_SELENIUM</artifactId>
+    <artifactId>SUITE_AUTOMATIZACION_SELENIUM</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

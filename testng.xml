@@ -1,7 +1,9 @@
-<suite name="SuiteRegistro" parallel="tests" thread-count="2">
-    <test name="RegistroTestFactory">
+<suite name="SuiteCompleta" parallel="tests" thread-count="4">
+    <test name="SuiteTestFactory">
         <classes>
-            <class name="tests.RegistroTest"/>
+            <class name="tests.TestFactory"/>
         </classes>
     </test>
 </suite>
+
+

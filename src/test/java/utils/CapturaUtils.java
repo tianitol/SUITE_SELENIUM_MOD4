@@ -21,7 +21,7 @@ public class CapturaUtils {
     public  void tomarCaptura(ExtentTest test, String navegador) {
         //Captura de pantalla
         File captura = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String ruta = "target/captura_" + test.getModel().getName() + "_" + test.getStatus() + "_" + navegador + ".png";
+        String ruta = "target/captura_" + test.getModel().getName() + "_" + test.getStatus() + ".png";
         try {
             FileUtils.copyFile(captura, new File(ruta));
             test.addScreenCaptureFromPath(ruta);

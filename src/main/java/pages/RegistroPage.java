@@ -24,11 +24,7 @@ public class RegistroPage {
     private By campoConfirmarPassword = By.id("password-confirmation");
     private By botonFormCrearCuenta = By.cssSelector("#form-validate > div > div.primary > button");
     private By vistaCuentaUsuario = By.xpath("//*[@id=\"maincontent\"]/div[2]/div[1]/div[1]/h1/span");
-    private By mensajeErrorPassword = By.id("password-confirmation-error");
     private By mensajeErrorCorreoYaRegistrado = By.cssSelector("#maincontent > div.page.messages > div:nth-child(2) > div > div > div");
-    //private By getLinkCerrarSesion = By.xpath("//*[@id=\"shopify-section-template--18814871109870__main\"]/div/div[1]/a");
-    private By mensajeErrorForm = By.xpath("//*[@id=\"create_customer\"]/h2/text()"); //Por favor, ajusta lo siguiente:
-    private By mensajeErrorDetalle = By.xpath("//*[@id=\"create_customer\"]/ul/li/text()"); //Esta dirección de e‑mail ya ha sido asociada con una cuenta. Si la cuenta es tuya, puedes <a href="/account/login#recover">restablecer tu contraseña aquí</a>
 
     //Métodos
 
@@ -106,14 +102,7 @@ public class RegistroPage {
         }
     }
 
-    public boolean validarErrorPasswordNoCoincide() {
-        return validarError(mensajeErrorPassword, "Please enter the same value again.");
-    }
-
     public boolean validarErrorEmailYaRegistrado()  {
         return validarError(mensajeErrorCorreoYaRegistrado, "There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.");
     }
-
-
-
 }

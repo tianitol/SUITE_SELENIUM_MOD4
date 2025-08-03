@@ -7,6 +7,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.*;
 import utils.ReporteManager;
 
+import java.lang.reflect.Method;
+
 public class BaseTest {
 
     protected WebDriver driver;
@@ -17,10 +19,14 @@ public class BaseTest {
         this.navegador = navegador;
     }
 
-    @BeforeMethod(alwaysRun = true)
-    //@org.testng.annotations.Parameters("navegador")
-    public void setUp() {
+    @BeforeClass(alwaysRun = true)
+    public void setupReporte()  {
         ReporteManager.iniciarReporte();
+    }
+
+    @BeforeMethod(alwaysRun = true)
+    public void setUp(Method method) {
+        ReporteManager.crearTest(method.getName() + "-" + navegador);
 
         if  (navegador.equalsIgnoreCase("chrome"))    {
             WebDriverManager.chromedriver().setup();
