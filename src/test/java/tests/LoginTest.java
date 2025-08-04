@@ -1,6 +1,7 @@
 package tests;
 
 import com.aventstack.extentreports.ExtentTest;
+import dataproviders.DatosTestProvider;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
@@ -46,4 +47,41 @@ public class LoginTest extends BaseTest {
             capturaUtils.tomarCaptura(test, navegador);
         }
     }
+
+
+    @Test(dataProvider = "datosLogin", dataProviderClass = DatosTestProvider.class)
+    public void loginMasivo(String email, String password, String resultadoEsperado) {
+        ExtentTest test = ReporteManager.getTest();
+        LoginPage login = new LoginPage(driver);
+        CapturaUtils capturaUtils = new CapturaUtils(driver);
+
+        try {
+            login.iniciarLoginYCompletarFormulario(email, password);
+            boolean loginExitoso = login.esperarYValidarVistaCuentaDeUsuario();
+            boolean correoRequerido = login.validarCorreoRequerido();
+            boolean passRequerida = login.validarPassRequerida();
+
+            if (resultadoEsperado.equalsIgnoreCase("valido")) {
+                Assert.assertTrue(loginExitoso, "Login válido falló");
+                test.pass("Login exitoso con credenciales válidas");
+            } else if (resultadoEsperado.equalsIgnoreCase("invalido")){
+                Assert.assertTrue(login.validarErrorCredencialesLogin(), "No se mostró error esperado");
+                test.pass("Login fallido correctamente con credenciales inválidas");
+            } else if (resultadoEsperado.equalsIgnoreCase("correoRequerido")) {
+                Assert.assertTrue(correoRequerido, "No se mostró error esperado");
+                test.pass("Login fallido correctamente, faltante campo 'email' Requerido");
+            } else if (resultadoEsperado.equalsIgnoreCase("passRequerida")){
+                Assert.assertTrue(passRequerida, "No se mostró error esperado");
+                test.pass("Login fallido correctamente, faltante campo 'password' Requerido");
+            }
+
+        } catch (Exception e) {
+            test.fail("Excepción: " + e.getMessage());
+            Assert.fail("Error en test: " + e.getMessage());
+        } finally {
+            capturaUtils.tomarCaptura(test, navegador);
+        }
+    }
+
+
 }

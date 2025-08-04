@@ -16,10 +16,12 @@ public class LoginPage {
     //Localizadores
     private By linkSignIn = By.cssSelector("body > div.page-wrapper > header > div.panel.wrapper > div > ul > li.authorization-link > a");
     private By campoUsuario = By.id("email");
-    private  By campoPassword = By.id("pass");
+    private By campoPassword = By.id("pass");
     private By botonSignIn = By.id("send2");
     private By mensajeErrorLoginIncorrecto = By.xpath("//*[@id=\"maincontent\"]/div[2]/div[2]/div/div/div");
     private By mensajeBienvenidaUsuario = By.cssSelector("body > div.page-wrapper > header > div.panel.wrapper > div > ul > li.greet.welcome > span");
+    private By mensajePassRequerida = By.id("pass-error");
+    private By mensajeCorreoRequerido = By.id("email-error");
 
     //Métodos
 
@@ -77,4 +79,22 @@ public class LoginPage {
     public boolean validarErrorCredencialesLogin()  {
         return validarError(mensajeErrorLoginIncorrecto, "The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.");
     }
+
+    public boolean campoRequerido(By locator, String mensaje)   {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        try {
+            WebElement requerido = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return requerido.getText().contains(mensaje);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+   public boolean validarCorreoRequerido()  {
+        return campoRequerido(mensajeCorreoRequerido, "This is a required field.");
+   }
+
+   public boolean validarPassRequerida()    {
+        return campoRequerido(mensajePassRequerida, "This is a required field.");
+   }
 }
