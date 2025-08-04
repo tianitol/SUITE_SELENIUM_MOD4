@@ -99,7 +99,7 @@ A continuación se presentan capturas de pantalla generadas automáticamente por
 
 ### ✅ Registro Exitoso
 
-<img src="src/test/resources/captura_registroExitoso-chrome_pass.png" alt="Registro exitoso en Chrome" width="600"/>
+<img src="src/test/resources/captura_registroExitoso-chrome_pass.png" alt="Registro exitoso en navegador Chrome" width="600"/>
 
 ---
 
