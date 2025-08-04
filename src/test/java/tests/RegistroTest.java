@@ -15,7 +15,9 @@ public class RegistroTest extends BaseTest{
 
     @Test
     public void registroExitoso() {
-        ExtentTest test = ReporteManager.getTest();
+        String nombreTest = "registroExitoso-" + navegador;
+        ExtentTest test = ReporteManager.crearTest(nombreTest);
+
         RegistroPage registro = new RegistroPage(driver);
         CapturaUtils capturaUtils = new CapturaUtils(driver);
 
@@ -33,7 +35,9 @@ public class RegistroTest extends BaseTest{
 
     @Test
     public void registroFallidoPorCorreoYaRegistrado()   {
-        ExtentTest test = ReporteManager.getTest();
+        String nombreTest = "registroFallidoPorCorreoYaRegistrado-" + navegador;
+        ExtentTest test = ReporteManager.crearTest(nombreTest);
+
         RegistroPage registro = new RegistroPage(driver);
         CapturaUtils capturaUtils = new CapturaUtils(driver);
 

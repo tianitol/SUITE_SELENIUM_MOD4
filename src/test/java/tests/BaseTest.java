@@ -8,6 +8,8 @@ import org.testng.annotations.*;
 import utils.ReporteManager;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class BaseTest {
 
@@ -19,15 +21,13 @@ public class BaseTest {
         this.navegador = navegador;
     }
 
-    @BeforeClass(alwaysRun = true)
-    public void setupReporte()  {
+    @BeforeSuite(alwaysRun = true)
+    public void iniciarReporteSuite()  {
         ReporteManager.iniciarReporte();
     }
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method) {
-        ReporteManager.crearTest(method.getName() + "-" + navegador);
-
         if  (navegador.equalsIgnoreCase("chrome"))    {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
@@ -50,6 +50,10 @@ public class BaseTest {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public void cerrarReporteSuite()    {
         ReporteManager.finalizarReporte();
     }
 

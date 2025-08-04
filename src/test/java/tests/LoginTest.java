@@ -15,7 +15,9 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void loginExitoso()  {
-        ExtentTest test = ReporteManager.getTest();
+        String nombreTest = "loginExitoso-" + navegador;
+        ExtentTest test = ReporteManager.crearTest(nombreTest);
+
         LoginPage login = new LoginPage(driver);
         CapturaUtils capturaUtils = new CapturaUtils(driver);
 
@@ -33,7 +35,9 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void loginFallidoPorCredencialesInvalidas()  {
-        ExtentTest test = ReporteManager.getTest();
+        String nombreTest = "loginFallidoPorCredencialesInvalidas-" + navegador;
+        ExtentTest test = ReporteManager.crearTest(nombreTest);
+
         LoginPage login = new LoginPage(driver);
         CapturaUtils capturaUtils = new CapturaUtils(driver);
 
@@ -51,7 +55,17 @@ public class LoginTest extends BaseTest {
 
     @Test(dataProvider = "datosLogin", dataProviderClass = DatosTestProvider.class)
     public void loginMasivo(String email, String password, String resultadoEsperado) {
-        ExtentTest test = ReporteManager.getTest();
+
+// Sanitizar datos para evitar caracteres especiales
+        String emailSanitizado = email.replaceAll("[^a-zA-Z0-9]", "_");
+        String passwordSanitizado = password.replaceAll("[^a-zA-Z0-9]", "_");
+        String resultadoSanitizado = resultadoEsperado.replaceAll("[^a-zA-Z0-9]", "_");
+
+
+// Generar nombre único para el test
+        String nombreTest = String.format("loginMasivo-%s-%s-%s-%s", navegador, emailSanitizado, passwordSanitizado, resultadoSanitizado);
+        ExtentTest test = ReporteManager.crearTest(nombreTest);
+
         LoginPage login = new LoginPage(driver);
         CapturaUtils capturaUtils = new CapturaUtils(driver);
 

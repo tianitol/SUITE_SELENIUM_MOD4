@@ -127,7 +127,12 @@ A continuación se presentan capturas de pantalla generadas automáticamente por
 ---
 
 ### 📄 Reporte HTML
-<img src="src/test/resources/reporteHTML_typo.png" alt="Reporte HTML" width="600"/>
+
+#### DASHBOARD
+<img src="src/test/resources/REPORTE_DASHBOARD.png" alt="Reporte HTML dashboard" width="600"/>
+
+#### Tests
+<img src="src/test/resources/REPORTE_TESTS.png" alt="Reporte HTML dashboard" width="600"/>
 
 
 
