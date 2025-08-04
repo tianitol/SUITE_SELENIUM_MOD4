@@ -122,7 +122,12 @@ A continuación se presentan capturas de pantalla generadas automáticamente por
 ---
 ### 🚫 Login Fallido (Campos requeridos)
 
-<img src="src/test/resources/" alt="Login fallido por campos requeridos faltantes en Edge" width="600"/>
+#### Correo requerido
+<img src="src/test/resources/captura_loginMasivo-edge--123asdF_-correoRequerido_pass.png" alt="Login fallido campo correo requerido faltantes en Edge" width="600"/>
+
+#### Password requerida
+
+<img src="src/test/resources/captura_loginMasivo-chrome-anaene_email_com--passRequerida_pass.png" alt="Login fallido campo Password requerida faltantes en Chrome" width="600"/>
 
 ---
 
