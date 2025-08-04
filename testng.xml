@@ -1,4 +1,4 @@
-<suite name="SuiteCompleta" parallel="tests" thread-count="4">
+<suite name="SuiteCompleta" parallel="tests" thread-count="5">
     <test name="SuiteTestFactory">
         <classes>
             <class name="tests.TestFactory"/>
